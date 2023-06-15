@@ -1,0 +1,11 @@
+To use the program, use node with one of those arguments:
+ - help: show you this text
+ - template: add a template todo in a format of  "id": X,
+                                                 "title": "almogX",
+                                                 "descrtiption": "something hereX",
+                                                 "isCompleted": false
+ - add ['title'] ['description'] : add a todo with 2 arguments for the title and the description.
+            for example add 'plan a vacation' 'look in trip advisor for tour in Europe'
+ - delete [id]:  delete the selected todo by the selected id
+ - update [id] [true/false]: update the isCompleted key of the selected todo to true or false
+ - read [id]: show the selected todo
