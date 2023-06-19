@@ -1,21 +1,16 @@
 import './ProductsSection.css';
 import { Product } from "../Product/Product";
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { MyContext } from '../../MyContext';
 
-export const ProductsSection = ({productsA}) => {
+export const ProductsSection = () => {
 
-  //useState
-  const [products,setProducts] = useState(productsA);
+  const {currentProducts} = useContext(MyContext);
 
-
-  useEffect(() => {
-    console.log('welcome to the world new compony')
-    console.log('products came -' ,productsA);
-  },[]) 
 
   return (
       <section className="products">
-        {productsA.map((product)=><Product src={product.image} title={product.title} price={product.price} category={product.category}/>)}
+        {currentProducts.map((p)=> <Product src={p.image} title={p.title} price={p.price} id={p.id} />)}        
       </section>
     );
   };
