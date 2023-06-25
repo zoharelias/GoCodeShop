@@ -1,5 +1,5 @@
 import {
-    addMultipleProducts,
+  addMultipleProducts,
   addSingleProduct,
   deleteProduct,
   getAllProducts,

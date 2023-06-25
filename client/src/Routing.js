@@ -2,7 +2,6 @@ import React ,{useState, useEffect} from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import App from './App';
 import { MyContext } from './MyContext';
-//import AboutPage from './pages/AboutPage';
 
 import AboutPage from './pages/AboutPage/AboutPage'
 import AdminPage from './pages/AdminPage/AdminPage';
@@ -13,8 +12,8 @@ import Contact from './components/Contact/Contact';
 
 const Routing = () => {
 //add code here
-  //useState
-  const [categories, setCategories] = useState([]);
+//useState
+const [categories, setCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [currentProducts, setCurrentProducts] = useState([]);
   const [cart, setCart] = useState([]);
@@ -31,12 +30,15 @@ const Routing = () => {
 
   //Add to cart
   const addToCart = (id, amount, setFunc) => {
+    console.log('addToCart: id-',id,'amount-',amount);
+    console.log('addToCart: setFunc=',setFunc);
     if (amount === 0) {
       return;
     }
-    const foundProduct = currentProducts.find((p) => p.id === id);
-    const isProductExistInCart = cart.find((p) => p.id === foundProduct.id);
-
+    const foundProduct = currentProducts.find((p) => p._id === id);
+    const isProductExistInCart = cart.find((p) => p._id === foundProduct.id);
+    console.log('addToCart: isProductExistInCart-',isProductExistInCart);
+    
     if (isProductExistInCart) { //if the product already in cart
       const productInCartIndex = cart.findIndex((p) => p.id === foundProduct.id);
       const cartCopy = [...cart];
@@ -78,6 +80,7 @@ const Routing = () => {
 
   //useEffects
   //when page is loading
+  //the action: get the products from DB
   useEffect(() => {
     console.log('useEffect []');
     fetchProducts();
@@ -95,7 +98,7 @@ const Routing = () => {
 
   
   useEffect(() => {
-    console.log(cart);
+    console.log('cart has changed via useEffect, now it is:',cart);
   }, [cart]);
 
 
@@ -116,17 +119,19 @@ const Routing = () => {
           isCartOpen
         }}
       >
-        <Link to='/'>HomePage</Link>
-        <Link to='about'>About</Link>
-        <Link to='cart'>Cart</Link>
-        <Link to='admin'>Admin</Link>
+        <div className='navbar'>
+          <Link className='routeLink' to='/'>HomePage</Link>
+          <Link className='routeLink' to='about'>About</Link>
+          <Link className='routeLink' to='cart'>Cart</Link>
+          <Link className='routeLink' to='admin'>Admin</Link>
+        </div>
         <Routes>
            <Route path='/' element={<App />} /> 
            <Route path='about' element={<AboutPage />} /> 
            <Route path='admin' element={<AdminPage />} /> 
            <Route path='cart' element={<CartPage />} /> 
            <Route path='about' element={<AboutPage />} /> 
-           <Route path='product' element={<SingleProductPage />} /> 
+           <Route path='product/:id' element={<SingleProductPage />} /> 
            {/* <Route path='/' element={<App />} /> 
            <Route path='/' element={<App />} /> 
           <Route path='/' element={<App />} />  */}
@@ -137,3 +142,4 @@ const Routing = () => {
 }
 
 export default Routing;
+

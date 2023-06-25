@@ -47,3 +47,13 @@
   height: 25px;
   width: 25px;
 }
+
+.addToCartContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 2px;
+  
+
+}

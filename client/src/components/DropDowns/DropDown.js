@@ -1,7 +1,6 @@
 import './DropDown.css';
 
 export const DropDowns = ({label, optionsArray, onChange}) => {
-    console.log('label',label);
     return (
         <div>
             <div className='collection-sort'>

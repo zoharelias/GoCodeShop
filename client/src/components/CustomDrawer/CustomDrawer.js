@@ -17,5 +17,4 @@ const CustomDrawer = ({children})=>{
     )
 };
 
-
 export default CustomDrawer;

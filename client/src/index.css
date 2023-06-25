@@ -186,3 +186,12 @@ code {
       color: #666;
       font-size: 14px;
     }
+
+
+    .routeLink{
+      padding: 10px;
+      border: red 1px solid;
+    }
+    .navbar{
+      padding: 30px;
+    }
