@@ -14,8 +14,14 @@ const SingleProductPage = () => {
         setProduct(data);
     }
 
+    //Page title
+    useEffect(()=>{
+        document.title = product?.title;
+    },[product]);
+
     useEffect(()=>{
         fetchProduct();
+        //document.title = product.title;
     },[id]);
 
     return (
@@ -24,8 +30,10 @@ const SingleProductPage = () => {
             <Product
                 src={product.image}
                 title={product.title}
+                description={product.description}
                 price={product.price}
                 id={product._id}
+                isInSinglePage={true}
             />
            )} 
         </div>

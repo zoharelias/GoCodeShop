@@ -4,12 +4,12 @@ import { MyContext } from '../../MyContext';
 import { Product } from '../Product/Product';
 
 export const ShoppingCart = () => {
-    const {shoppingCart} = useContext(MyContext);
+    const {cart} = useContext(MyContext);
     const myContext = useContext(MyContext);
 
     const getNumberOfProductsInCart=()=>{
         let i = 0;
-        shoppingCart.forEach(element => {
+        cart.forEach(element => {
             i += element.amount;
         });
         return i;
@@ -17,7 +17,7 @@ export const ShoppingCart = () => {
 
     const getTotalPrice=()=>{
         let i = 0;
-        shoppingCart.forEach(element => {
+        cart.forEach(element => {
             i += element.price * element.amount;
         });
         return i.toFixed(2);
@@ -29,7 +29,7 @@ export const ShoppingCart = () => {
       } else {
         //make it visible
       }
-    },[shoppingCart]) 
+    },[cart]) 
   
 
     return (
@@ -46,11 +46,11 @@ export const ShoppingCart = () => {
             <div className='sm-table head-tbl'>Image</div>
             <div className='head-tbl'>item</div>
             </p>
-            {shoppingCart.map((product)=><p className='itemContainer'>
+            {cart.map((product)=><p className='itemContainer'>
                     <div className='sm-table'>{product.amount}</div>
                     <div className='sm-table'>{product.price}</div>
                     <div className='sm-table'>{(product.price * product.amount).toFixed(2)}</div>
-                    <div className='sm-table'><img className='img-tbl' src={product.src}></img></div>
+                    <div className='sm-table'><img className='img-tbl' src={product.image}></img></div>
                     <div>{product.title}</div>
                     </p>)}
         </div>

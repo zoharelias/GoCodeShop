@@ -17,7 +17,7 @@ const [categories, setCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [currentProducts, setCurrentProducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState([false]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
 
   const incrementProduct = (setFunc) => {

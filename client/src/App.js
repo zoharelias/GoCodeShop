@@ -6,14 +6,15 @@ import CustomDrawer from './components/CustomDrawer/CustomDrawer';
 import { Nav } from './components/Nav/Nav';
 import { ProductsSection } from './components/ProductsSection/ProductsSection';
 function App() {
+  const shopTitle = "Zohar's GoCode Shop";
   return (
     <div className="App">
         <CustomDrawer>
           <CartItems />
         </CustomDrawer> 
-        <Nav />
+        <Nav shopTitle={shopTitle}/>
         {/* <ShoppingCart />  */}
-        <ProductsSection /> 
+        <ProductsSection shopTitle={shopTitle}/> 
     </div>
   );
 }

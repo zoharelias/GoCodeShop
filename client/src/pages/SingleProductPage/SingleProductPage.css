@@ -1,0 +1,15 @@
+.singleProductContainer > .product-card {
+    width: 400px;
+    height: 500px;
+}
+
+.singleProductContainer > .product-card > .product-info > h4{
+    padding: 10px;
+    text-align: left;
+}
+
+.singleProductContainer > .product-card > .product-info > h3{
+    padding: 10px;
+    font-size: x-large;
+    /* text-align: left; */
+}
