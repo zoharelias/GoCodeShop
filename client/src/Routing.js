@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import App from './App';
 import { MyContext } from './MyContext';
 
+import Table from './pages/Table/Table';
+import TablePagination from './pages/Table/TablePagination';
+import DataTable from './pages/DataTable/DataTable';
 import AboutPage from './pages/AboutPage/AboutPage'
 import AdminPage from './pages/AdminPage/AdminPage';
 import CartPage from './pages/CartPage/CartPage';
@@ -18,7 +21,8 @@ const [categories, setCategories] = useState([]);
   const [currentProducts, setCurrentProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
+  const [productIdToDelete,setProductIdToDelete] = useState(0);
+  const [productIdToEdit,setProductIdToEdit] = useState(0);
 
   const incrementProduct = (setFunc) => {
     setFunc((prev) => prev + 1);
@@ -61,6 +65,19 @@ const [categories, setCategories] = useState([]);
     setCurrentProducts(data);
   };
 
+  //delete product
+  const deleteProductById = async (id) => {
+    try {
+      const deletedProd = await fetch(`http://localhost:8000/api/product/${id}`, { method: 'DELETE'});
+      //return `Prodeuct deleted succsfully`;
+      const res = await deletedProd.json();
+      console.log(`Deleted product`,deletedProd);
+      console.log(`res`,res);
+    } catch (error) {
+      return `Pruduct was not deleted, there was an error: ${error}`;
+    }
+    
+  };
   
   const handleFilterProducts = (category) => {
     if (category !== "All") {
@@ -82,9 +99,8 @@ const [categories, setCategories] = useState([]);
   //when page is loading
   //the action: get the products from DB
   useEffect(() => {
-    console.log('useEffect []');
     fetchProducts();
-  }, []);
+  }, [productIdToDelete]);
 
   //in changes
   //when allProducts change - update the list of categories dynamically
@@ -98,10 +114,10 @@ const [categories, setCategories] = useState([]);
 
   
   useEffect(() => {
-    console.log('cart has changed via useEffect, now it is:',cart);
+    //console.log('cart has changed via useEffect, now it is:',cart);
   }, [cart]);
 
-
+  
 
 //reurn
   return (
@@ -110,13 +126,20 @@ const [categories, setCategories] = useState([]);
         value={{
           cart,
           currentProducts,
+          allProducts,
+          setAllProducts,
           categories,
           handleFilterProducts,
           incrementProduct,
           decrementProduct,
           addToCart,
           setIsCartOpen,
-          isCartOpen
+          isCartOpen,
+          deleteProductById,
+          productIdToDelete,
+          setProductIdToDelete,
+          productIdToEdit,
+          setProductIdToEdit
         }}
       >
         <div className='navbar'>
@@ -124,6 +147,9 @@ const [categories, setCategories] = useState([]);
           <Link className='routeLink' to='about'>About</Link>
           <Link className='routeLink' to='cart'>Cart</Link>
           <Link className='routeLink' to='admin'>Admin</Link>
+          <Link className='routeLink' to='dataTable'>Data Table</Link>
+          <Link className='routeLink' to='table'>Table</Link>
+          <Link className='routeLink' to='tablePagination'>Table Pagination</Link>
         </div>
         <Routes>
            <Route path='/' element={<App />} /> 
@@ -131,6 +157,9 @@ const [categories, setCategories] = useState([]);
            <Route path='admin' element={<AdminPage />} /> 
            <Route path='cart' element={<CartPage />} /> 
            <Route path='about' element={<AboutPage />} /> 
+           <Route path='datatable' element={<DataTable />} /> 
+           <Route path='table' element={<Table />} /> 
+           <Route path='tablepagination' element={<TablePagination />} /> 
            <Route path='product/:id' element={<SingleProductPage />} /> 
            {/* <Route path='/' element={<App />} /> 
            <Route path='/' element={<App />} /> 
