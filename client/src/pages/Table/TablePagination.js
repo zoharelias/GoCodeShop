@@ -95,8 +95,14 @@ export default function CustomPaginationActionsTable() {
   const { productIdToDelete,setProductIdToDelete } = useContext(MyContext);
   const { setProductIdToEdit, fetchProducts } = useContext(MyContext);
   //console.log('allProducts',allProducts);
+  const [rerender, setRerender] = useState(false);
+  const [allProductsLocal,setAllProductsLocal] = useState([...allProducts]);
+//console.log('allProductsLocal',allProductsLocal);
+   useEffect(()=>{
+       setAllProductsLocal([...allProducts]);
+   }, [allProducts]);
 
-  
+
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -112,20 +118,23 @@ export default function CustomPaginationActionsTable() {
   };
 
   const editProd = (id) => {
-    console.log('Edit, ID=',id);
+    //console.log('Edit, ID=',id);
     setProductIdToEdit(id);
-  }
+    setAllProductsLocal([...allProducts]);
+}
   const deleteProd = (id) => {
-    console.log('Delete, ID=',id);
+    //console.log('Delete, ID=',id);
     setProductIdToDelete(id);
+    setAllProductsLocal([...allProducts]);
   }
+  
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableBody>
           {(rowsPerPage > 0
-            ? allProducts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : allProducts
+            ? allProductsLocal.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : allProductsLocal
           ).map((product) => (
             <TableRow key={product._id}>
               <TableCell style={{ width: 40 }} align="right">

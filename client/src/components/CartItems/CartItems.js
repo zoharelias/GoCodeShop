@@ -5,7 +5,7 @@ import './CartItems.css';
 
 const CartItems = ()=>{
     const {cart} = useContext(MyContext);
-    console.log('cart:', cart);
+    //console.log('cart:', cart);
     return(
         <div>
             <div className="header">Your Cart Items</div>

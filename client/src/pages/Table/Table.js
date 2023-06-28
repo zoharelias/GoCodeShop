@@ -30,7 +30,7 @@ export default function BasicTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const {allProducts} = React.useContext(MyContext);
-    console.log('allProducts',allProducts);
+    //console.log('allProducts',allProducts);
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =

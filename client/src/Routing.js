@@ -34,14 +34,14 @@ const [categories, setCategories] = useState([]);
 
   //Add to cart
   const addToCart = (id, amount, setFunc) => {
-    console.log('addToCart: id-',id,'amount-',amount);
-    console.log('addToCart: setFunc=',setFunc);
+    //console.log('addToCart: id-',id,'amount-',amount);
+    //console.log('addToCart: setFunc=',setFunc);
     if (amount === 0) {
       return;
     }
     const foundProduct = currentProducts.find((p) => p._id === id);
     const isProductExistInCart = cart.find((p) => p._id === foundProduct.id);
-    console.log('addToCart: isProductExistInCart-',isProductExistInCart);
+    //console.log('addToCart: isProductExistInCart-',isProductExistInCart);
     
     if (isProductExistInCart) { //if the product already in cart
       const productInCartIndex = cart.findIndex((p) => p.id === foundProduct.id);
@@ -68,17 +68,52 @@ const [categories, setCategories] = useState([]);
   //delete product
   const deleteProductById = async (id) => {
     try {
-      const deletedProd = await fetch(`http://localhost:8000/api/product/${id}`, { method: 'DELETE'});
+      const res = await fetch(`http://localhost:8000/api/product/${id}`, { method: 'DELETE'});
       //return `Prodeuct deleted succsfully`;
-      const res = await deletedProd.json();
-      console.log(`Deleted product`,deletedProd);
-      console.log(`res`,res);
+      const deletedProd = await res.json();
+      const deletedProdId = deletedProd._id;
+      //console.log(`Deleted product`,deletedProd);
+      //console.log(`res`,res);
+      setAllProducts(removeProductById(allProducts,deletedProdId));
+      //console.log(allProducts);
     } catch (error) {
       return `Pruduct was not deleted, there was an error: ${error}`;
     }
     
   };
+
+  const editProductById = async (id, formObject) =>{
+    try{
+      console.log('formObject',formObject);
+      const req = {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formObject)
+        };
+        const address = `http://localhost:8000/api/product/${id}`;
+        console.log(address);
+      const res = await fetch(address,req);
+      const updatedProduct = await res.json();
+      console.log('res',res);
+      console.log('updatedProduct',updatedProduct);
+        return updatedProduct;
+    } catch(error) {
+      return error;
+    }
+  };
   
+const removeProductById = (arr, id)=> {
+  const objWithIdIndex = arr.findIndex((obj) => obj._id === id);
+
+  if (objWithIdIndex > -1) {
+    arr.splice(objWithIdIndex, 1);
+  }
+
+  return arr;
+};
+
+
+
   const handleFilterProducts = (category) => {
     if (category !== "All") {
       const filteredProducts = allProducts.filter(
@@ -100,7 +135,8 @@ const [categories, setCategories] = useState([]);
   //the action: get the products from DB
   useEffect(() => {
     fetchProducts();
-  }, [productIdToDelete]);
+  }, []);
+  //}, [productIdToDelete]);
 
   //in changes
   //when allProducts change - update the list of categories dynamically
@@ -136,6 +172,7 @@ const [categories, setCategories] = useState([]);
           setIsCartOpen,
           isCartOpen,
           deleteProductById,
+          editProductById,
           productIdToDelete,
           setProductIdToDelete,
           productIdToEdit,

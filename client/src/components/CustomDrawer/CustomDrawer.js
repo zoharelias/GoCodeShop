@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 
 const CustomDrawer = ({children})=>{
     const {isCartOpen, setIsCartOpen} = useContext(MyContext);
-    console.log('children',children);
+    //console.log('children',children);
     return (
         <>
             <Drawer 

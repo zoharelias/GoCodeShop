@@ -6,7 +6,7 @@ import { ShoppingCart } from "../../components/ShoppingCart/ShoppingCart";
 
 const CartPage = () => {
     const {cart} = useContext(MyContext);
-    console.log({cart});
+    //console.log({cart});
 
         //Page title
         useEffect(()=>{
