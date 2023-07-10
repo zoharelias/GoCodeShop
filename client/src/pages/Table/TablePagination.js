@@ -15,8 +15,8 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { ShoppingCartTwoTone } from '@mui/icons-material';
-import { Badge } from '@mui/material';
+//import { ShoppingCartTwoTone } from '@mui/icons-material';
+//import { Badge } from '@mui/material';
 import { useContext, useEffect,useState } from 'react';
 import { MyContext } from '../../MyContext';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
@@ -83,21 +83,15 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
-
 
 export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const {allProducts} = useContext(MyContext);
-  const { productIdToDelete,setProductIdToDelete } = useContext(MyContext);
-  const { setProductIdToEdit, fetchProducts } = useContext(MyContext);
-  //console.log('allProducts',allProducts);
-  const [rerender, setRerender] = useState(false);
+  const { setProductIdToDelete } = useContext(MyContext);
+  const { setProductIdToEdit } = useContext(MyContext);
+  //const [rerender, setRerender] = useState(false);
   const [allProductsLocal,setAllProductsLocal] = useState([...allProducts]);
-//console.log('allProductsLocal',allProductsLocal);
    useEffect(()=>{
        setAllProductsLocal([...allProducts]);
    }, [allProducts]);
@@ -118,69 +112,65 @@ export default function CustomPaginationActionsTable() {
   };
 
   const editProd = (id) => {
-    //console.log('Edit, ID=',id);
     setProductIdToEdit(id);
     setAllProductsLocal([...allProducts]);
 }
   const deleteProd = (id) => {
-    //console.log('Delete, ID=',id);
     setProductIdToDelete(id);
-    setAllProductsLocal([...allProducts]);
   }
   
-  return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-        <TableBody>
-          {(rowsPerPage > 0
-            ? allProductsLocal.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : allProductsLocal
-          ).map((product) => (
-            <TableRow key={product._id}>
-              <TableCell style={{ width: 40 }} align="right">
-                {/* {<button onClick={()=>editProd(product._id)}>EDIT</button>} */}
-                <IconButton title='Edit product' onClick={()=>{editProd(product._id)}}>
-                    <ModeEditIcon color="primary" aria-label="shopping cart"/>
-                </IconButton>
-              </TableCell>
-              <TableCell style={{ width: 40 }} align="right">
-                {/* {<button onClick={()=>editProd(product._id)}>EDIT</button>} */}
-                <IconButton title='Delete product' onClick={()=>{deleteProd(product._id)}}>
-                    <DeleteSweepIcon color="primary" aria-label="shopping cart"/>
-                </IconButton>
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {product.title}
-              </TableCell>
+    return (
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+          <TableBody>
+            {(rowsPerPage > 0
+              ? allProductsLocal.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : allProductsLocal
+            ).map((product) => (
+              <TableRow key={product._id}>
+                <TableCell style={{ width: 40 }} align="right">
+                  <IconButton title='Edit product' onClick={()=>{editProd(product._id)}}>
+                      <ModeEditIcon color="primary" aria-label="shopping cart"/>
+                  </IconButton>
+                </TableCell>
+                <TableCell style={{ width: 40 }} align="right">
+                  <IconButton title='Delete product' onClick={()=>{deleteProd(product._id)}}>
+                      <DeleteSweepIcon color="primary" aria-label="shopping cart"/>
+                  </IconButton>
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {product.title}
+                </TableCell>
+              </TableRow>
+            ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={3}
+                count={allProducts.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    'aria-label': 'rows per page',
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
             </TableRow>
-          ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={allProducts.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
-  );
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    );
+
 }

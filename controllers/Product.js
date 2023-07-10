@@ -78,12 +78,13 @@ export const addMultipleProductsController = async (req, res) => {
  export const updateProductController =  async (req, res) => {
     const userAllowedUpdates = ["price", "category", "description", "rating", "image"];
     const updates = Object.keys(req.body);
+    console.log('updates: ',updates);
     const isValidOperation = updates.every((update) =>
       userAllowedUpdates.includes(update)
     );
   
     if (!isValidOperation) {
-      res.status(400).send({ message: "Invalid updates" });
+       return res.status(400).send({ message: "you included a field which is not allowed to be updated. the only fields allowed are: 'price', 'category', 'description', 'rating', 'image'" });
     }
   
     try {
@@ -94,7 +95,15 @@ export const addMultipleProductsController = async (req, res) => {
       }
       updates.forEach((update) => (product[update] = req.body[update]));
       await product.save();
+      // if(req.method === "OTIONS"){
+      res.set("Access-Control-Allow-Origin", "*");
+      
+      res.setHeader("Access-Control-Allow-Methods", "PUT");
+      //   res.status(200).send(product);
+      //   //return res.sendStatus(200);
+      // } else {
       res.status(200).send(product);
+      // }
     } catch (e) {
       console.log(e);
       res.status(500).send({ message: e });
