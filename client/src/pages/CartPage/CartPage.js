@@ -6,7 +6,6 @@ import { ShoppingCart } from "../../components/ShoppingCart/ShoppingCart";
 
 const CartPage = () => {
     const {cart} = useContext(MyContext);
-    //console.log({cart});
 
         //Page title
         useEffect(()=>{
@@ -15,7 +14,7 @@ const CartPage = () => {
     
     return (
         <div>
-            <div>Shopping Cart</div>
+            {/* <div>Shopping Cart</div>
             <div className="cartItem">
                 {cart.map(cartItem => 
                     <div className="cartLine">
@@ -23,7 +22,7 @@ const CartPage = () => {
                         <p className="cartItem">{cartItem.title}</p>
                         <p className="cartItem">{cartItem.price}$</p>
                     </div>)}
-            </div>
+            </div> */}
             <ShoppingCart />
         </div>
     )

@@ -1,35 +1,44 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import { MyContext } from "../../MyContext";
 import { dividerClasses } from "@mui/material";
 import './CartItems.css';
 
 const CartItems = ()=>{
-    const {cart,setCart} = useContext(MyContext);
-    //console.log('cart:', cart);
-    const addProduct = (id)=>{
-        const isProductAlreadyInCart = cart.find(ele => ele._id === id);
-        const filteredArr = cart.filter((catrItem, index, arr)=>{ 
-            return catrItem._id !== id;
+    const {cart,setCart,setItemsCount} = useContext(MyContext);
+    
+    useEffect(() => {
+        if(getNumberOfProductsInCart() === 0){
+          //make shoppng cart non visible
+        } else {
+          //make it visible
+        }
+      },[cart]) 
+  
+    
+    
+    const getNumberOfProductsInCart=()=>{
+        let i = 0;
+        cart.forEach(element => {
+            i += element.amount;
         });
-        isProductAlreadyInCart.amount += 1;
-        setCart([...filteredArr,isProductAlreadyInCart]);
+        setItemsCount(i);
+        return i;
+    }
+    const addProduct = (id)=>{
+        const tempCart = [...cart];
+        const itemToChangeIndex = tempCart.findIndex(item=> item._id ===id);
+        tempCart[itemToChangeIndex].amount += 1;
+        setCart([...tempCart]);
     }
     const removeProduct = (id)=>{
         const tempCart = [...cart];
         const itemToChangeIndex = tempCart.findIndex(item=> item._id ===id);
-        console.log(itemToChangeIndex);
         if(tempCart[itemToChangeIndex].amount > 1){
              tempCart[itemToChangeIndex].amount -= 1;
         } else { //remove item from cart
             tempCart.splice(itemToChangeIndex,1);
         }
         setCart([...tempCart]);
-        // const isProductAlreadyInCart = cart.find(ele => ele._id === id);
-        // const filteredArr = cart.filter((catrItem, index, arr)=>{ 
-        //     return catrItem._id !== id;
-        // });
-        // isProductAlreadyInCart.amount -= 1;
-        // setCart([...filteredArr,isProductAlreadyInCart]);
     }
     return(
         <div>

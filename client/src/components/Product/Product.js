@@ -25,7 +25,6 @@ export const Product = ({ src, title, price, category, id, isInSinglePage, descr
 },[count]);
   
   const linkToSingleProductPage = ()=>{
-    //console.log(isInSinglePage);
     if(isInSinglePage) {
       return;
     } else {
@@ -33,7 +32,6 @@ export const Product = ({ src, title, price, category, id, isInSinglePage, descr
     }
   };
   const { shoppingCart, setShoppingCart } = useContext(MyContext);
-    //console.log('title', title, 'isInSinglePage',isInSinglePage );
     return (
       <div className="product-card">
         <div className="product-image" onClick={()=> linkToSingleProductPage()}>

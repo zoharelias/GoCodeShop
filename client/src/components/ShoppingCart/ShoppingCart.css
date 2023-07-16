@@ -1,6 +1,9 @@
 .shoppingCart{
-    border: 2px gold solid;
-    background-color: azure;
+    margin-top: 50px;
+    padding: 20px;
+    border: 2px #EEE;
+    border-radius: 12px;
+    background-color: #DDD;
 }
 
 .shoppingCartHeader{

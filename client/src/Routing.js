@@ -2,6 +2,7 @@ import React ,{useState, useEffect} from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import App from './App';
 import { MyContext } from './MyContext';
+import { getNumOfProductsInCart } from './Utils';
 
 import Table from './pages/Table/Table';
 import TablePagination from './pages/Table/TablePagination';
@@ -12,6 +13,7 @@ import AdminPage from './pages/AdminPage/AdminPage';
 import CartPage from './pages/CartPage/CartPage';
 import SingleProductPage from './pages/SingleProductPage/SingleProductPage';
 
+import { CartIcon } from './components/CartIcon/CartIcon';
 import Contact from './components/Contact/Contact';
 
 const Routing = () => {
@@ -24,7 +26,7 @@ const [categories, setCategories] = useState([]);
   const [productIdToDelete,setProductIdToDelete] = useState(0);
   const [productIdToEdit,setProductIdToEdit] = useState(0);
   const [allProducts, setAllProducts] = useState([]);
-
+  const [itemsCount, setItemsCount] = useState(0);
   const incrementProduct = (setFunc) => {
     setFunc((prev) => prev + 1);
   };
@@ -33,19 +35,35 @@ const [categories, setCategories] = useState([]);
     setFunc((prev) => (prev === 0 ? prev : prev - 1));
   };
 
+
+  useEffect(() => {
+    if(getNumberOfProductsInCart === 0){
+      //make shoppng cart non visible
+    } else {
+      //make it visible
+    }
+  },[cart]) 
+
+    const getNumberOfProductsInCart=()=>{
+    let i = 0;
+    cart.forEach(element => {
+        i += element.amount;
+    });
+    setItemsCount(i);
+    console.log('i',i);
+    return i;
+}
+
+
   //Add to cart
   const addToCart = (id, amount, setFunc) => {
-    console.log('addToCart: id:',id,'amount:',amount);
-    console.log('addToCart: setFunc=',setFunc);
     if (amount === 0) {
       return;
     }
     const foundProduct = currentProducts.find((p) => p._id === id);
-    console.log('foundProduct:',foundProduct);
     const isProductExistInCart = cart.find((p) =>{
        return p._id === foundProduct._id;
     });
-    console.log('isProductExistInCart:',isProductExistInCart);
     if (isProductExistInCart) { //if the product already in cart
       const productInCartIndex = cart.findIndex((p) => p._id === foundProduct._id);
       const cartCopy = [...cart];
@@ -56,6 +74,10 @@ const [categories, setCategories] = useState([]);
       productToCart.amount = amount;
       setCart([...cart, productToCart]);
     }
+    let currentItemsCount = getNumOfProductsInCart(cart);
+    console.log('currentItemsCount',currentItemsCount);
+    setItemsCount(currentItemsCount);
+    console.log('items count:',itemsCount);
     setFunc(0); //set the count to 0
   };
 
@@ -77,10 +99,6 @@ const [categories, setCategories] = useState([]);
       const product = {};
       const res = await fetch(`http://localhost:8000/api/product/${id}`);
       const singleProduct = await res.json();
-      console.log('res',res);
-      console.log('singleProduct',singleProduct);
-      //return res;
-      //return singleProduct.description;
       return singleProduct;
     } catch(error){
       return error;
@@ -93,12 +111,10 @@ const [categories, setCategories] = useState([]);
       //return `Prodeuct deleted succsfully`;
       const deletedProd = await res.json();
       const deletedProdId = deletedProd._id;
-      //console.log(`Deleted product`,deletedProd);
-      //console.log(`res`,res);
       const newProducts = removeProductById(allProducts,deletedProdId);
-      console.log('newProducts',newProducts);
+      console.log('newProducts updated',newProducts);
       setAllProducts(newProducts);
-      console.log('allProducts',allProducts);
+      console.log('allProducts updated from newProducts',allProducts);
     } catch (error) {
       return `Pruduct was not deleted, there was an error: ${error}`;
     }
@@ -108,9 +124,7 @@ const [categories, setCategories] = useState([]);
   //edit - PUT
   const editProductById = async (id, formObject) =>{
     try{
-      console.log('formObject',formObject);
       const bodyJson = JSON.stringify(formObject);
-      console.log('bodyJson',bodyJson);
       const req = {
           method: 'PUT',
           cache: 'no-cache',
@@ -118,11 +132,8 @@ const [categories, setCategories] = useState([]);
           body: JSON.stringify(formObject)
         };
         const address = `http://localhost:8000/api/product/${id}`;
-        console.log(address);
         const res = await fetch(address,req);
         const updatedProduct = await res.json();
-        console.log('res',res);
-        console.log('updatedProduct',updatedProduct);
 
         //update allProducts and setAllproducts
 
@@ -149,9 +160,7 @@ const [categories, setCategories] = useState([]);
 //Add - POST
 const addProduct = async (formObject)=>{
   try{
-    console.log('formObject',formObject);
     const bodyJson = JSON.stringify(formObject);
-    console.log('bodyJson',bodyJson);
     const req = {
         method: 'POST',
         cache: 'no-cache',
@@ -159,15 +168,10 @@ const addProduct = async (formObject)=>{
         body: JSON.stringify(formObject)
       };
     const address = `http://localhost:8000/api`;
-    console.log(address);
     const res = await fetch(address,req);
     const updatedProduct = await res.json();
-    console.log('updatedProduct',updatedProduct);
-    //update allProducts
     const newAllProducts = [...allProducts,updatedProduct];
-    console.log('newAllProducts',newAllProducts);
     setAllProducts(newAllProducts);
-    console.log('allProducts',allProducts);
     return updatedProduct;
   } catch(error) {
     return error;
@@ -220,6 +224,8 @@ const addProduct = async (formObject)=>{
     <BrowserRouter>
       <MyContext.Provider
         value={{
+          itemsCount,
+          setItemsCount,
           cart,
           setCart,
           currentProducts,
@@ -242,16 +248,26 @@ const addProduct = async (formObject)=>{
           getSingleProductById
         }}
       >
-        <div className='navbar'>
-          <Link className='routeLink' to='/'>HomePage</Link>
-          <Link className='routeLink' to='about'>About</Link>
-          <Link className='routeLink' to='cart'>Cart</Link>
-          <Link className='routeLink' to='admin'>Admin</Link>
-          <Link className='routeLink' to='dataTable'>Data Table</Link>
-          <Link className='routeLink' to='dynamicTable'>Dynamic Table</Link>
-          <Link className='routeLink' to='table'>Table</Link>
-          <Link className='routeLink' to='tablePagination'>Table Pagination</Link>
-        </div>
+        <nav>
+            <Link className='button-30' to='/'>HomePage</Link>
+            <Link className='button-30' to='cart'>Cart</Link>
+            <Link className='button-30' to='about'>About</Link>
+            <Link className='button-30' to='admin'>Admin</Link>
+            {/* <Link className='button-17' to='dataTable'>Data Table</Link> */}
+            {/* <Link className='button-17' to='dynamicTable'>Dynamic Table</Link> */}
+            {/* <Link className='button-17' to='table'>Table</Link> */}
+            {/* <Link className='button-17' to='tablePagination'>Table Pagination</Link> */}
+            
+            {/* <Link className='routeLink' to='/'>HomePage</Link>
+            <Link className='routeLink' to='about'>About</Link>
+            <Link className='routeLink' to='cart'>Cart</Link>
+            <Link className='routeLink' to='admin'>Admin</Link>
+            <Link className='routeLink' to='dataTable'>Data Table</Link>
+            <Link className='routeLink' to='dynamicTable'>Dynamic Table</Link>
+            <Link className='routeLink' to='table'>Table</Link>
+            <Link className='routeLink' to='tablePagination'>Table Pagination</Link> */}
+            {/* <CartIcon /> */}
+        </nav>
         <Routes>
            <Route path='/' element={<App />} /> 
            <Route path='about' element={<AboutPage />} /> 

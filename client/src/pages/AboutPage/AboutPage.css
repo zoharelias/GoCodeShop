@@ -1,0 +1,16 @@
+.main{
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    font-size: larger;
+}
+.text {
+    margin: 5px;
+    padding: 5px;
+    font-size: large;
+}

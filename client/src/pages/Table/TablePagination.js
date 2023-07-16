@@ -84,7 +84,8 @@ TablePaginationActions.propTypes = {
 };
 
 
-export default function CustomPaginationActionsTable() {
+//export default function CustomPaginationActionsTable() {
+const CustomPaginationActionsTable = ()=> {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const {allProducts} = useContext(MyContext);
@@ -103,6 +104,7 @@ export default function CustomPaginationActionsTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - allProducts.length) : 0;
 
   const handleChangePage = (event, newPage) => {
+    setAllProductsLocal([...allProducts]);
     setPage(newPage);
   };
 
@@ -172,5 +174,6 @@ export default function CustomPaginationActionsTable() {
         </Table>
       </TableContainer>
     );
-
 }
+
+export default CustomPaginationActionsTable;

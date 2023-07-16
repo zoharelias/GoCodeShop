@@ -9,7 +9,15 @@ import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 //import { ShoppingCart } from '../ShoppingCart/ShoppingCart';
 
 export const Nav = ({shopTitle}) => {
-  const {categories, handleFilterProducts, setIsCartOpen} = useContext(MyContext);
+  const {categories, handleFilterProducts, setIsCartOpen, itemsCount} = useContext(MyContext);
+
+  const sortBy = (sortByValue)=>{
+    console.log(sortByValue);
+    switch(sortByValue){
+      case "":
+        break;
+    }
+  }
 
   return (
     <nav className="product-filter">
@@ -17,13 +25,14 @@ export const Nav = ({shopTitle}) => {
       <div className="sort">
 
         <DropDowns onChange={(event) => handleFilterProducts(event.target.value)} label = {"filter"} optionsArray={categories}/>
-        <DropDowns onChange={(event) => {console.log(event.target.value)}} label={"sort"} optionsArray={sortArrOptions}/>
+        {/* <DropDowns onChange={(event) => {console.log(event.target.value)}} label={"sort"} optionsArray={sortArrOptions}/> */}
+        <DropDowns onChange={(event) => sortBy(event.target.value)} label={"sort"} optionsArray={sortArrOptions}/>
         
-        <Badge badgeContent={0} color="primary">
+        <Badge badgeContent={itemsCount} color="primary">
           <IconButton onClick={()=>{setIsCartOpen(true)}}>
             <ShoppingCartTwoToneIcon color="primary" aria-label="shopping cart"/>
           </IconButton>
-          </Badge>
+        </Badge>
 
       </div>
     </nav>
