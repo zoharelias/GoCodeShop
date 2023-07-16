@@ -36,13 +36,13 @@ const [categories, setCategories] = useState([]);
   };
 
 
-  useEffect(() => {
-    if(getNumberOfProductsInCart === 0){
-      //make shoppng cart non visible
-    } else {
-      //make it visible
-    }
-  },[cart]) 
+  // useEffect(() => {
+  //   if(getNumberOfProductsInCart === 0){
+  //     //make shoppng cart non visible
+  //   } else {
+  //     //make it visible
+  //   }
+  // },[cart]) 
 
     const getNumberOfProductsInCart=()=>{
     let i = 0;
@@ -215,6 +215,7 @@ const addProduct = async (formObject)=>{
   
   useEffect(() => {
     //console.log('cart has changed via useEffect, now it is:',cart);
+    getNumberOfProductsInCart();
   }, [cart]);
 
   
