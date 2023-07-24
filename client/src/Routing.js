@@ -15,6 +15,7 @@ import SingleProductPage from './pages/SingleProductPage/SingleProductPage';
 
 import { CartIcon } from './components/CartIcon/CartIcon';
 import Contact from './components/Contact/Contact';
+import { GET_ALL_PRODUCTS_PATH } from "./constants/api";
 
 const Routing = () => {
 //add code here
@@ -75,7 +76,8 @@ const [categories, setCategories] = useState([]);
   //get data from DB/server
   const fetchProducts = async () => {
     //const response = await fetch('https://fakestoreapi.com/products');
-    const response = await fetch('http://localhost:8000/api/');
+    //const response = await fetch('http://localhost:8000/api/');
+    const response = await fetch(GET_ALL_PRODUCTS_PATH);
     const data = await response.json();
     setAllProducts(()=>{return data;});
     setCurrentProducts(()=>{return data;});
