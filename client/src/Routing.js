@@ -16,6 +16,7 @@ import SingleProductPage from './pages/SingleProductPage/SingleProductPage';
 import { CartIcon } from './components/CartIcon/CartIcon';
 import Contact from './components/Contact/Contact';
 import { GET_ALL_PRODUCTS_PATH } from "./constants/api";
+import { GET_PRODUCT_BY_ID } from "./constants/api";
 
 const Routing = () => {
 //add code here
@@ -90,7 +91,8 @@ const [categories, setCategories] = useState([]);
   const getSingleProductById = async (id)=>{
     try{
       const product = {};
-      const res = await fetch(`http://localhost:8000/api/product/${id}`);
+      //const res = await fetch(`http://localhost:8000/api/product/${id}`);
+      const res = await fetch(`${GET_PRODUCT_BY_ID}/${id}`);
       const singleProduct = await res.json();
       return singleProduct;
     } catch(error){
@@ -100,7 +102,8 @@ const [categories, setCategories] = useState([]);
   //delete product
   const deleteProductById = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/product/${id}`, { method: 'DELETE'});
+      //const res = await fetch(`http://localhost:8000/api/product/${id}`, { method: 'DELETE'});
+      const res = await fetch(`${GET_PRODUCT_BY_ID}/${id}`, { method: 'DELETE'});
       //return `Prodeuct deleted succsfully`;
       const deletedProd = await res.json();
       const deletedProdId = deletedProd._id;
@@ -124,7 +127,8 @@ const [categories, setCategories] = useState([]);
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formObject)
         };
-        const address = `http://localhost:8000/api/product/${id}`;
+        //const address = `http://localhost:8000/api/product/${id}`;
+        const address = `${GET_PRODUCT_BY_ID}/${id}`;
         const res = await fetch(address,req);
         const updatedProduct = await res.json();
 
@@ -160,7 +164,8 @@ const addProduct = async (formObject)=>{
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formObject)
       };
-    const address = `http://localhost:8000/api`;
+      //const address = `http://localhost:8000/api`;
+      const address = GET_ALL_PRODUCTS_PATH;
     const res = await fetch(address,req);
     const updatedProduct = await res.json();
     const newAllProducts = [...allProducts,updatedProduct];
