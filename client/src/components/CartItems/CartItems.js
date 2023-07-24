@@ -1,6 +1,7 @@
 import React, { useContext,useEffect } from "react";
 import { MyContext } from "../../MyContext";
 import { dividerClasses } from "@mui/material";
+import { Link } from 'react-router-dom';
 import './CartItems.css';
 
 const CartItems = ()=>{
@@ -44,6 +45,7 @@ const CartItems = ()=>{
         <div>
             <div className="header">
                 <div className="heading">Your Cart Items</div>
+                <div><Link className="simple" to={'cart'}>Go to Cart page</Link></div>
             </div>
             <div className="cartItems">
                 {cart.map(p=> <div className="item">

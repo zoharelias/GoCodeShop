@@ -11,13 +11,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-/*------------------------------------*\
-    RESET
-\*------------------------------------*/
-/* https://meyerweb.com/eric/tools/css/reset/ 
-    v2.0b1 | 201101 
-    NOTE:WORK IN PROGRESS
-    USE WITH CAUTION AND TEST WITH ABANDON */
 
     html,
     body,
@@ -137,12 +130,6 @@ code {
       content: ’’;
       content: none;
     }
-    /* remember to define visible focus styles! 
-    :focus{
-      outline:?????;
-    } */
-    
-    /* remember to highlight inserts somehow! */
     ins {
       text-decoration: none;
     }
@@ -155,10 +142,6 @@ code {
       border-spacing: 0;
     }
     
-    /*------------------------------------*\
-      $MAIN
-    \*------------------------------------*/
-    
     @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
     
     body {
@@ -169,7 +152,6 @@ code {
       background-color: #f6f6f6;
     }
     
-    /* Typography */
     
     h1 {
       font-size: 28px;
@@ -203,19 +185,17 @@ code {
       text-decoration: none;
     }
 
-
-    /* body {
-      background-color: #0a68bb;
-      background-image: url('https://images.unsplash.com/photo-1564500617448-e541b1df7cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-      background-size : cover;
-    } */
-    
+   
     nav {
       display: flex;
+      margin-top: 50px;
       margin : 20px auto;
-      width  : 290px; 
+      width  : 390px; 
     }
-    
+    .toolbar {
+      margin-top: 60px;
+      width: 100%;
+    }
 
     .routeLink {
       list-style-type : none;
@@ -272,13 +252,8 @@ code {
       border-color : white transparent transparent transparent;
       transition   : all .4s;
     }
-     */
     /*************************************/
     
-    /* <!-- HTML !-->
-    <button class="button-17" role="button">Button 17</button>
-     */
-    /* CSS */
     .button-17 {
       align-items: center;
       appearance: none;
@@ -350,10 +325,6 @@ code {
 
 
 
-    /* <!-- HTML !-->
-<button class="button-30" role="button">Button 30</button> */
-
-/* CSS */
 .button-30 {
   align-items: center;
   appearance: none;

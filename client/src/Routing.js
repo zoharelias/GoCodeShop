@@ -35,21 +35,12 @@ const [categories, setCategories] = useState([]);
     setFunc((prev) => (prev === 0 ? prev : prev - 1));
   };
 
-
-  // useEffect(() => {
-  //   if(getNumberOfProductsInCart === 0){
-  //     //make shoppng cart non visible
-  //   } else {
-  //     //make it visible
-  //   }
-  // },[cart]) 
-
     const getNumberOfProductsInCart=()=>{
     let i = 0;
     cart.forEach(element => {
         i += element.amount;
     });
-    setItemsCount(i);
+    setItemsCount(()=>{return i;});
     console.log('i',i);
     return i;
 }
@@ -68,17 +59,17 @@ const [categories, setCategories] = useState([]);
       const productInCartIndex = cart.findIndex((p) => p._id === foundProduct._id);
       const cartCopy = [...cart];
       cartCopy[productInCartIndex].amount += amount;
-      setCart(cartCopy);
+      setCart(()=>{return cartCopy;});
     } else {
       const productToCart = { ...foundProduct };
       productToCart.amount = amount;
-      setCart([...cart, productToCart]);
+      setCart(()=>{return [...cart, productToCart];});
     }
     let currentItemsCount = getNumOfProductsInCart(cart);
     console.log('currentItemsCount',currentItemsCount);
-    setItemsCount(currentItemsCount);
+    setItemsCount(()=>{return currentItemsCount;});
     console.log('items count:',itemsCount);
-    setFunc(0); //set the count to 0
+    setFunc(()=>{return 0;}); //set the count to 0
   };
 
   //get data from DB/server
@@ -86,8 +77,8 @@ const [categories, setCategories] = useState([]);
     //const response = await fetch('https://fakestoreapi.com/products');
     const response = await fetch('http://localhost:8000/api/');
     const data = await response.json();
-    setAllProducts(data);
-    setCurrentProducts(data);
+    setAllProducts(()=>{return data;});
+    setCurrentProducts(()=>{return data;});
   };
 
 
@@ -113,7 +104,7 @@ const [categories, setCategories] = useState([]);
       const deletedProdId = deletedProd._id;
       const newProducts = removeProductById(allProducts,deletedProdId);
       console.log('newProducts updated',newProducts);
-      setAllProducts(newProducts);
+      setAllProducts(()=>{return newProducts;});
       console.log('allProducts updated from newProducts',allProducts);
     } catch (error) {
       return `Pruduct was not deleted, there was an error: ${error}`;
@@ -171,7 +162,7 @@ const addProduct = async (formObject)=>{
     const res = await fetch(address,req);
     const updatedProduct = await res.json();
     const newAllProducts = [...allProducts,updatedProduct];
-    setAllProducts(newAllProducts);
+    setAllProducts(()=>{return newAllProducts;});
     return updatedProduct;
   } catch(error) {
     return error;
@@ -183,12 +174,12 @@ const addProduct = async (formObject)=>{
       const filteredProducts = allProducts.filter(
         (p) => p.category === category
       );
-      setCurrentProducts(filteredProducts);
+      setCurrentProducts(()=>{return filteredProducts;});
     } else {
       if (currentProducts.length === allProducts.length) {
         return;
       } else {
-        setCurrentProducts(allProducts);
+        setCurrentProducts(()=>{return allProducts;});
       }
     }
   };
@@ -205,11 +196,13 @@ const addProduct = async (formObject)=>{
   //in changes
   //when allProducts change - update the list of categories dynamically
   useEffect(() => {
-    setCategories(
+    setCategories(()=>{
+      return( 
       allProducts
         .map((p) => p.category)
         .filter((value, index, array) => array.indexOf(value) === index)
-    );
+      )
+    });
   }, [allProducts]);
 
   
@@ -250,10 +243,12 @@ const addProduct = async (formObject)=>{
         }}
       >
         <nav>
-            <Link className='button-30' to='/'>HomePage</Link>
-            <Link className='button-30' to='cart'>Cart</Link>
-            <Link className='button-30' to='about'>About</Link>
-            <Link className='button-30' to='admin'>Admin</Link>
+            <div className='toolbar'>
+              <Link className='button-30' to='/'>HomePage</Link>
+              <Link className='button-30' to='cart'>Cart</Link>
+              <Link className='button-30' to='about'>About</Link>
+              <Link className='button-30' to='admin'>Admin</Link>
+            </div>
             {/* <Link className='button-17' to='dataTable'>Data Table</Link> */}
             {/* <Link className='button-17' to='dynamicTable'>Dynamic Table</Link> */}
             {/* <Link className='button-17' to='table'>Table</Link> */}

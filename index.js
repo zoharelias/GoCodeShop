@@ -27,6 +27,7 @@ const { PORT, DB_USER, DB_PASS, DB_HOST, DB_NAME } = process.env;
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static('client/build'));
 
 app.get("/api/", getAllProductsController);
 app.get("/api/product/:id", getProductByIdController);
@@ -45,6 +46,11 @@ app.put("/api/product/:id", updateProductController);
 app.delete("/api/product/:id/", deleteProductController);
 
 //--------
+
+app.get("*", (req,res) => {
+  res.sendFile(__dirname+"/client/build/index.html")
+})
+
 
 //Connect to DB
 async function main() {

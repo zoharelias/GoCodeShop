@@ -24,6 +24,7 @@ const AdminPage = () => {
     
     useEffect(()=>{
         getPaginationPage();
+        
     }, [allProducts]);
 
     const setAdminOnOff = () => {
