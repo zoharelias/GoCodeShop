@@ -19,6 +19,7 @@ import {
     getProductByIdController,
     updateProductController,
 } from "./controllers/Product.js";
+import path from "path";
 
 dotenv.config();
 
@@ -28,11 +29,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-//app.use(express.static('client/build'));
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build')); 
-  app.use('*', express.static('client/build')); // Added this     
-}
+app.use(express.static('client/build'));
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static('client/build')); 
+//   //app.use('*', express.static('client/build')); // Added this     
+// }
 app.get("/api/", getAllProductsController);
 app.get("/api/product/:id", getProductByIdController);
 //GET products by category
@@ -50,6 +51,12 @@ app.put("/api/product/:id", updateProductController);
 app.delete("/api/product/:id/", deleteProductController);
 
 //--------
+
+//var path = require('path');
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
 
 app.get("*", (req,res) => {
   res.sendFile(__dirname+"/client/build/index.html")
