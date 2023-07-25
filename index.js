@@ -27,8 +27,12 @@ const { PORT, DB_USER, DB_PASS, DB_HOST, DB_NAME } = process.env;
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(express.static('client/build'));
 
+//app.use(express.static('client/build'));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build')); 
+  app.use('*', express.static('client/build')); // Added this     
+}
 app.get("/api/", getAllProductsController);
 app.get("/api/product/:id", getProductByIdController);
 //GET products by category
