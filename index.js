@@ -59,7 +59,8 @@ app.delete("/api/product/:id/", deleteProductController);
 // });
 
 app.get("/*", (req,res) => {
-  res.sendFile(__dirname+"/client/build/index.html")
+  console.log("/*!!!");
+  res.sendFile(__dirname+"/client/build/index.html");
 })
 
 

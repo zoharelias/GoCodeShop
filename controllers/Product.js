@@ -19,6 +19,7 @@ export const getAllProductsController = async (req, res) => {
 
 export const getProductByIdController = async (req, res) => {
   try {
+    ///console.log("^^^");
     const id = req.params.id;
     const product = await getProductById(id);
     res.status(200).send(product);
