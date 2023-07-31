@@ -41,7 +41,7 @@ export const Nav = ({shopTitle}) => {
     <nav className="product-filter">
       <div className="sort">
 
-        <h3>{shopTitle}</h3>
+        <h2>{shopTitle}</h2>
         <DropDowns onChange={(event) => handleFilterProducts(event.target.value)} label = {"filter"} optionsArray={categories}/>
         {/* <DropDowns onChange={(event) => {console.log(event.target.value)}} label={"sort"} optionsArray={sortArrOptions}/> */}
         <DropDowns onChange={(event) => sortBy(event.target.value)} label={"sort"} optionsArray={sortArrOptions}/>

@@ -1,3 +1,7 @@
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+
 import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
@@ -20,6 +24,9 @@ import {
     updateProductController,
 } from "./controllers/Product.js";
 import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 dotenv.config();
 
@@ -58,8 +65,7 @@ app.delete("/api/product/:id/", deleteProductController);
 //   res.sendFile(path.join(__dirname, 'client/build/index.html'));
 // });
 
-app.get("/*", (req,res) => {
-  console.log("/*!!!");
+app.get("*", (req,res) => {
   res.sendFile(__dirname+"/client/build/index.html");
 })
 
