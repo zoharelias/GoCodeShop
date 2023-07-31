@@ -1,25 +1,33 @@
 .product-filter {
     width: 90%;
-    border: 10px solid yellow;
     padding: 30px 0;
-    /* flex-direction: column; */
     flex-direction: row;
-    /* gap: 30px; */
     
 }
 
 .sort {
-    width: 90%;
-    border: 5px red solid;
+    width: 100%;
     margin-top: 30px;
     padding: 20px;
     display: flex;
     justify-content: space-evenly;
     align-items: baseline;
-    /* align-self: flex-end; */
 }
 
+.shopTitle{
+    border: 4px black solid;
+    border-radius: 50%;
+    padding: 15px;
+    font-size: x-large;
+    font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
+.cartIcon{
+    padding-left: 30px;
+    padding-top: 5px;
+    margin-top: 10px;
+}
 
   
 

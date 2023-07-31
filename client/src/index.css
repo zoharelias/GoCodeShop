@@ -188,12 +188,19 @@ code {
    
     nav {
       display: flex;
+      flex-direction: row;
       margin-top: 50px;
       margin : 20px auto;
-      width  : 390px; 
+      width  : 90%; 
+      justify-content: space-between; 
     }
     .toolbar {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 5px;
       margin-top: 60px;
+      align-items: baseline;
       width: 100%;
     }
 

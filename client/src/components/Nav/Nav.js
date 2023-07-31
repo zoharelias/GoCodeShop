@@ -41,7 +41,7 @@ export const Nav = ({shopTitle}) => {
     <nav className="product-filter">
       <div className="sort">
 
-        <h2>{shopTitle}</h2>
+        <div className='shopTitle'>{shopTitle}</div>
         <DropDowns onChange={(event) => handleFilterProducts(event.target.value)} label = {"filter"} optionsArray={categories}/>
         {/* <DropDowns onChange={(event) => {console.log(event.target.value)}} label={"sort"} optionsArray={sortArrOptions}/> */}
         <DropDowns onChange={(event) => sortBy(event.target.value)} label={"sort"} optionsArray={sortArrOptions}/>
@@ -62,7 +62,7 @@ export const Nav = ({shopTitle}) => {
           />
         </Box>
 
-        <Badge badgeContent={itemsCount} color="primary">
+        <Badge className='cartIcon' badgeContent={itemsCount} color="primary">
           <IconButton onClick={()=>{setIsCartOpen(true)}}>
             <ShoppingCartTwoToneIcon color="primary" aria-label="shopping cart"/>
           </IconButton>

@@ -62,18 +62,22 @@ const AdminPage = () => {
    };
     return (
         <div>
-            <h1>Admin Page</h1>
-            <button onClick={()=> setAdminOnOff()}>Set Admin</button>
+            <div className="headerClass"><h1>Admin Page</h1></div>
+            <div className="loginSection">
+                <button className="button-17" onClick={()=> setAdminOnOff()}>Set Admin</button>
+            </div>
             {
                 isAdmin &&
             <>
-                <h2>ADMIN</h2>
+                <h2>Data:</h2>
                 {/* <CustomPaginationActionsTable /> */}
                 {getPaginationPage()}
-                <h3>ID to delete:{productIdToDelete}</h3>
-                <h3>ID to edit:{productIdToEdit}</h3>
-                <h3><button onClick={()=> beginAddProduct()}>Add Product</button></h3>
-                {(productIdToDelete !==0) && <button onClick={()=> confirmDelete(productIdToDelete)}>Confirm Delete</button>}
+                <div className="addEditForm">
+                    <h3>ID to delete:{productIdToDelete}</h3>
+                    <h3>ID to edit:{productIdToEdit}</h3>
+                    <h3><button className="button-17" onClick={()=> beginAddProduct()}>Add Product</button></h3>
+                    {(productIdToDelete !==0) && <button onClick={()=> confirmDelete(productIdToDelete)}>Confirm Delete</button>}
+                </div>
                 {
                     (productIdToEdit !==0) && 
                     <div className="addEditForm">
@@ -82,13 +86,13 @@ const AdminPage = () => {
                         <input name="category" value={selectedProductToEdit.category} placeholder="category" onChange={(event)=>{handleFormChange(event.target.name,event.target.value);}}  />
                         <input name="price" value={selectedProductToEdit.price} placeholder="price" onChange={(event)=>{handleFormChange(event.target.name,event.target.value);}} />
                         <input name="image" value={selectedProductToEdit.image} placeholder="image" onChange={(event)=>{handleFormChange(event.target.name,event.target.value);}} />
-                        <button onClick={()=> saveEdit(productIdToEdit)}>Save Changes</button>
+                        <button className="button-17" onClick={()=> saveEdit(productIdToEdit)}>Save Changes</button>
 
-                        <div>
+                        {/* <div>
                             <ol>
                                 {allProducts.map(prod=><li>{`${prod.category}-${prod.title.substring(0,9)}-${prod.description.substring(0,19)}-${prod.price}$`}</li>)}
                             </ol>
-                        </div>
+                        </div> */}
 
                     </div>
                     
